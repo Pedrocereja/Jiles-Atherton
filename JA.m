@@ -1,17 +1,16 @@
-function M = JA(H, Mo, h)
+function M = JA(H, Mo)
   # A funcao retorna o vetor da magnetizacao, M, a partir dos argumentos:
   # - H:   vetor do campo magnetico externo aplicado;
-  # - Mo: condicao inicial para a magnetizacao;
-  # - h:    passo de calculo para o metodo de euler.
+  # - Mo: condicao inicial para a magnetizacao.
   
   numero_pontos = length(H); ### o vetor M possuira o mesmo numero de pontos que H
-
+  
   ## Constantes e condicao inicial
   k=400;
-  c=0.2;
+  c=0.27;
   a=1100;
   uo = 4*pi()*1e-7;
-  Ms=1.8e6;
+  Ms=1.6e6;
   alpha=1.6e-3;
   M(1) = Mo;
 
@@ -26,7 +25,7 @@ function M = JA(H, Mo, h)
       dMan_dHe = (Ms/a)*(1-(coth(He/a))^2+(a/He)^2);
     end
     ### delta
-    dH=(H(i+1)-H(i))
+    dH=(H(i+1)-H(i));
     if dH >= 0
         delta=1;
     else
@@ -38,7 +37,7 @@ function M = JA(H, Mo, h)
     dM_dH(i) += c/(1+c) * dMan_dHe;
     
     ## Método de euler
-    M(i+1) = M(i) + dH*dM_dH(i); ### passo de calculo esta estranho, ajeitar para h
+    M(i+1) = M(i) + dH*dM_dH(i);
   end
   
   ## Debug
