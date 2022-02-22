@@ -1,22 +1,18 @@
 clear all;
 close all;
 
-
-
-# Dados da simulacao
-numero_pontos = 10000;
-numero_periodos = 8;
-f = 60;
-
-# Condicoes iniciais
-for i = 1:(numero_periodos*numero_pontos)
-  t(i) = numero_periodos * 1/f * (i-1) /(numero_periodos*numero_pontos);
-  H(i) =6e3*sin(2*pi*f*t(i));    
+# Dados de entrada
+## carrega H
+load("Hext.mat");
+## parâmetros do material no formato [k, c, a, Ms, alpha]
+Parametros = [57.3, 0.27, 105, 1.58e6, 2e-4];
+## tempo para plot
+T = 8;
+for i = 1:(T*10000)
+  t(i) = T * 1/60 * (i-1) /(T*10000);
 end
 
-#load("Hext.mat");
-
-M = JA(H, 0);
+M = JA(H, 0, Parametros);
 #uo = 4*pi()*1e-7;
 #B = (M + H)*uo;
 
